@@ -34,6 +34,11 @@ articleView.handleAuthorFilter = function() {
       //       2. Show just the ones that match for the author that was selected.
       //          Use an "attribute selector" to find those articles that match the value,
       //          and fade them in for the reader.
+      $('#articles article').hide();
+      var $authorName = $(this).val();
+      $('#articles article[data-author="' + $authorName + '"]').show();
+      console.log('author name: ' + $authorName);
+      console.log('jQuery returns attribute from data-author: ' + $('#articles article').attr('data-author'));
 
     } else {
       // TODO: If the select box was changed to an option that is blank, we should:
@@ -54,6 +59,7 @@ articleView.handleCategoryFilter = function() {
 };
 
 articleView.handleMainNav = function() {
+  //REQUIERS EVENT DELEGATION
   // TODO: Add an event handler to .main-nav element that will power the Tabs feature.
   //       Clicking any .tab element should hide all the .tab-content sections, and then reveal the
   //       single .tab-content section that is associated with the clicked .tab element.
@@ -66,7 +72,7 @@ articleView.handleMainNav = function() {
 
 articleView.setTeasers = function() {
   $('.article-body *:nth-of-type(n+2)').hide(); // Hide elements beyond the first 2 in any artcile body.
-
+// find any paragraphs associated with what i'm looking at and show them all stretch goal read less button
   // TODO: Add an event handler to reveal all the hidden elements,
   //       when the .read-on link is clicked. You can go ahead and hide the
   //       "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
@@ -76,4 +82,7 @@ articleView.setTeasers = function() {
 };
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
-$();
+$(document).ready(function() {
+  articleView.populateFilters();
+  articleView.handleAuthorFilter();
+});
