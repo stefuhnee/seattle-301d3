@@ -1,5 +1,6 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
 var articleView = {};
+var $article = $('#articles article');
 
 articleView.populateFilters = function() {
   $('article').each(function() {
@@ -34,16 +35,16 @@ articleView.handleAuthorFilter = function() {
       //       2. Show just the ones that match for the author that was selected.
       //          Use an "attribute selector" to find those articles that match the value,
       //          and fade them in for the reader.
-      $('#articles article').hide();
+      $article.hide();
       var $authorName = $(this).val();
       $('#articles article[data-author="' + $authorName + '"]').show();
-      console.log('author name: ' + $authorName);
-      console.log('jQuery returns attribute from data-author: ' + $('#articles article').attr('data-author'));
 
     } else {
       // TODO: If the select box was changed to an option that is blank, we should:
       //       1. Show all the articles,
       //       2. Except the one article we are using as a template.
+      $article.show();
+      $('#articles article.template').hide();
 
     }
     $('#category-filter').val('');
@@ -51,12 +52,23 @@ articleView.handleAuthorFilter = function() {
 };
 
 articleView.handleCategoryFilter = function() {
+  $('#category-filter').on('change', function() {
+    if ($(this).val()) {
+      $article.hide();
+      var $category = $(this).val();
+      $('#articles article[data-category="' + $category + '"]').show();
+    }
+    else {
+      $article.show();
+      $('#articles article.template').hide();
+    }
+    $('#author-filter').val('');
+  });
+};
   // TODO: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
   //       When an option with a value is selected, hide all the articles, then reveal the matches.
   //       When the blank (default) option is selected, show all the articles, except for the template.
   //       Be sure to reset the #author-filter while you are at it!
-
-};
 
 articleView.handleMainNav = function() {
   //REQUIERS EVENT DELEGATION
@@ -85,4 +97,5 @@ articleView.setTeasers = function() {
 $(document).ready(function() {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
+  articleView.handleCategoryFilter();
 });
