@@ -1,6 +1,6 @@
-/* TODO: Add a rule for images, so they never exceed their container's width. */
-/* container: 50% width... image min-width: 100% or a strict width of 100%.
-*/
+/* DONE: Add a rule for images, so they never exceed their container's width. */
+
+/** on a mobile viewport, have the nav disappear and display hamburger icon. hover event. use icomoon. could use an image tag and have it relate to the icon. Have to use CSS combinator to show/hide ul when clicked. nav should have a display of none default from mobile first, then to block display on query. Hamburger gets display none. */
 
 
 body {
@@ -15,8 +15,7 @@ hr {
 }
 
 img {
-  min-width: 100%;
-  /*height: 30px;*/
+  max-width: 100%;
 }
 
 /*TEXT STYLES
