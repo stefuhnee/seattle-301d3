@@ -3,7 +3,6 @@
 
 .site-header {
   background: #FFEAAA;
-  position: relative;
 }
 
 /* DONE: Float the main header to the left, to make room for the hamburger menu. */
@@ -15,15 +14,14 @@
 /* DONE: Add styles for the icon-menu class. It should be bigger, and off to the right.*/
 
 .icon-menu {
-  position: absolute;
-  right: 2%;
-  bottom: 5%;
+  float: right;
   font-size: 2em;
+  margin-right: .5em;
 }
 
 .main-nav {
   padding: 0.1em;
-  width: 50%;
+  width: 100%;
 }
 
 .main-nav ul {
@@ -35,6 +33,7 @@
 
 .main-nav:hover ul {
   display: block;
+
 }
 
 .main-nav li {
@@ -66,12 +65,30 @@
          - Hide the hamburger.
          - Main should be all on one row, with padding spaced better for a larger screen.
          - Just, ya know, try to make it look good! ***min width needed, all styles defined within media query. */
-@media only screen(min-width: 600px) {
+@media (min-width: 600px) {
   .icon-menu {
     display: none;
   }
   .main-nav {
+    min-width: 100%
+  }
+  .main-nav ul{
     display: block;
+  }
+  .main-nav li {
+    display: inline-block;
+    padding-right: 1em;
+  }
+  .icon-home{
+    padding-left: 1em;
+  }
+  .site-header{
+    text-align: center;
+  }
+  .heading-group-h1{
+    display: inline-block;
     width: 100%;
+    padding: 0;
+    float: none;
   }
 }
