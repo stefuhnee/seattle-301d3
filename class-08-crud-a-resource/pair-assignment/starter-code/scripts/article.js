@@ -61,7 +61,7 @@
     webDB.execute(
       [
         {
-          'sql': 'UPDATE articles SET (title, author, authorUrl,  category, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?) WHERE id = ?;',
+          'sql': 'UPDATE articles SET title=?, author=?, authorUrl=?,  category=?, publishedOn=?, body=? WHERE id = ?;',
           'data': [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.body, this.id]
         }
       ],
