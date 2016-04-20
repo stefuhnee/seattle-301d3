@@ -1,7 +1,7 @@
 (function(module) {
   function Article (opts) {
     // DONE: Convert property assignment to Functional Programming style. Now, ALL properties
-    // of `opts` will be assigned as properies of the newly created article object.
+    // of `opts` will be assigned as properies of the newly created article object. ? ? ? placeholder needed somewhere
     Object.keys(opts).forEach(function(e, index, keys) {
       this[e] = opts[e];
     },this);
@@ -72,8 +72,8 @@
   // TODO: Use correct SQL syntax to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
-      'DELETE ...;', // <----finish the command here, inside the quotes.
-      callback
+      'DELETE ...;', // <----finish the command here, inside the quotes. * FROM table
+      callback //we allow webdbexecute to handle it.
     );
   };
 
@@ -93,7 +93,7 @@
       if (rows.length) {
         // TODO:
         // 1 - Use Article.loadAll to instanitate these rows,
-        // 2 - Pass control to the view by calling the next function that was passed in to Article.fetchAll
+        // 2 - Pass control to the view by calling the next function that was passed in to Article.fetchAll (init index page)
 
       } else {
         $.getJSON('/data/hackerIpsum.json', function(data) {
@@ -108,7 +108,7 @@
           webDB.execute('', function(rows) { // TODO: select our now full table
             // TODO:
             // 1 - Use Article.loadAll to instanitate these rows,
-            // 2 - Pass control to the view by calling the next function that was passed in to Article.fetchAll
+            // 2 - Pass control to the view by calling the next function that was passed in to Article.fetchAll -- similar to above (next parameter)
 
           });
         });
