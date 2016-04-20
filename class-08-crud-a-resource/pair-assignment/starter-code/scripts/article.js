@@ -22,7 +22,7 @@
   // DONE: Set up a DB table for articles.
   Article.createTable = function(callback) {
     webDB.execute(
-      'CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, title VARCHAR(255), author VARCHAR(255), authorUrl VARCHAR(255), category VARCHAR(255), publishedOn DATE, body TEXT);', // what SQL command do we run here inside these quotes?
+      'CREATE TABLE IF NOT EXISTS articles (id INTEGER PRIMARY KEY, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL, authorUrl VARCHAR(255) NOT NULL, category VARCHAR(255) NOT NULL, publishedOn DATE, body TEXT);', // what SQL command do we run here inside these quotes?
       function(result) {
         console.log('Successfully set up the articles table.', result);
         if (callback) callback();
@@ -48,7 +48,7 @@
     webDB.execute(
       [
         {
-          'sql': 'DELETE * FROM articles WHERE id = ?',
+          'sql': 'DELETE FROM articles WHERE id = ?;',
           'data': [this.id]
         }
       ],
@@ -69,7 +69,7 @@
     );
   };
 
-  // TODO: Use correct SQL syntax to delete all records from the articles table.
+  // DONE: Use correct SQL syntax to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
       'DELETE * FROM articles;', // <----finish the command here, inside the quotes.
@@ -89,12 +89,13 @@
   // If the DB has data already, we'll load up the data (by descended published order), and then hand off control to the View.
   // If the DB is empty, we need to retrieve the JSON and process it.
   Article.fetchAll = function(next) {
-    webDB.execute('...', function(rows) { // TODO: fill these quotes to 'select' our table.
+    webDB.execute('SELECT * FROM articles;', function(rows) { // TODO: fill these quotes to 'select' our table.
       if (rows.length) {
-        // TODO:
+        // DONE:
         // 1 - Use Article.loadAll to instanitate these rows,
+        Article.loadAll(rows);
         // 2 - Pass control to the view by calling the next function that was passed in to Article.fetchAll (init index page)
-
+        next();
       } else {
         $.getJSON('/data/hackerIpsum.json', function(data) {
           // Save each article from this JSON file, so we don't need to request it next time:
@@ -102,14 +103,16 @@
             var article = new Article(obj); // This will instantiate an article instance based on each article object from our JSON.
             // TODO:
             // 1 - 'insert' the newly-instantiated article in the DB: (hint: what can we call on each 'article' instance?).
-
+            article.insertRecord();
           });
           // Now get ALL the records out the DB, with their database IDs:
-          webDB.execute('', function(rows) { // TODO: select our now full table
+          webDB.execute('SELECT * FROM articles;', function(rows) {
+            // TODO: select our now full table
+            Article.loadAll(rows);
             // TODO:
             // 1 - Use Article.loadAll to instanitate these rows,
             // 2 - Pass control to the view by calling the next function that was passed in to Article.fetchAll -- similar to above (next parameter)
-
+            next();
           });
         });
       }
