@@ -72,7 +72,7 @@
   // DONE: Use correct SQL syntax to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
-      'DELETE * FROM articles;', // <----finish the command here, inside the quotes.
+      'DELETE FROM articles;', // <----finish the command here, inside the quotes.
       callback //we allow webdbexecute to handle it.
     );
   };
