@@ -43,12 +43,12 @@
     );
   };
 
-  // TODO: Delete an article instance from the database:
+  // DONE: Delete an article instance from the database:
   Article.prototype.deleteRecord = function(callback) {
     webDB.execute(
       [
         {
-          'sql': '...;',
+          'sql': 'DELETE * FROM articles WHERE id = ?',
           'data': [this.id]
         }
       ],
